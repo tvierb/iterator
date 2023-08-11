@@ -1,11 +1,14 @@
 #!/usr/bin/perl
 
 # iterator
+# ./iterator.pl -w IkeaTL:8.73 -w LochTL:9 -w MiniTL:6.1 -w IkeaEL:25 -w LochEL:23.25
 
 use strict;
 use warnings;
 use Data::Dumper;
 use Getopt::Long;
+use Math::Round;
+
 $|=1;
 
 GetOptions(
@@ -55,7 +58,7 @@ print "Values: " . Dumper( $values );
 print "chain : " . Dumper( $chain );
 
 #
-
+my %results = ();
 while(1)
 {
 	my $glied = 0;
@@ -70,7 +73,8 @@ while(1)
 			$glied++;
 			if ($glied >= $len_chain)
 			{
-				die("Uebertrag des Todes");
+				print "Uebertrag des Todes\n";
+				goto RESULTS
 			}
 			$uebertrag = 1;
 		}
@@ -87,9 +91,19 @@ while(1)
 		push( @calculation, $factor );
 		push( @calculation, $names->[ $chain->[ $column ] ] );
 	}
-	shift @calculation;
-	print join(" ", @calculation) . " = " . $sum . "\n";
-	print join(" ", @$chain) . "\n";
-	print "\n";
+	# print $sum . " = " . join(" ", @calculation) . "\n";
+	$sum = round( 100 * $sum ) / 100;
+	if (($sum > 0) && (! defined $results{ $sum }))
+	{
+		shift @calculation;
+		$results{ $sum } = join( " ", @calculation );
+	}
+	# print join(" ", @$chain) . "\n";
+}
+
+RESULTS:
+foreach my $v (sort { $a <=> $b } keys %results)
+{
+	print "$v = " . $results{$v} . "\n";
 }
 
