@@ -31,14 +31,12 @@ $precision = 10**$precision;
 my $num_weights = scalar @weights;
 
 # Namen und Werte der weights aufteilen und chain initialisieren:
-my $chain = [];
 my $names = [];
 my $values = [];
 for (my $i = 0; $i < $num_weights; $i++)
 {
 	my ($n, $v) = split(/:/, $weights[ $i ]);
 	die("broken --weight " . $weights[ $i ] ) unless defined $v;
-	push( @$chain, -1 );
 	push( @$names, $n );
 	push( @$values, $v );
 }
@@ -51,10 +49,18 @@ if ($len > 1) # nimm auch negative Werte auf:
 		push( @$values, - $values->[ $i ] );
 	}
 }
+
+# init the chain (list of indices on weights):
+my $chain = [];
+for (my $i = 1; $i <= $len; $i++)
+{
+	push( @$chain, -1 );
+}
+my $len_chain = scalar @$chain;
+
 my $num_values = scalar @$values;
 print "weights: " . Dumper( \@weights );
 
-my $len_chain = scalar @$chain;
 
 print "Names : " . Dumper( $names );
 print "Values: " . Dumper( $values );
