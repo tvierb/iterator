@@ -60,6 +60,7 @@ while(1)
 {
 	my $glied = 0;
 	my $uebertrag = 0;
+	# Generiere neuen Zustand der Kette:
 	do {
 		$uebertrag = 0;
 		$chain->[ $glied ]++; # darin ist ein Pointer/Index
@@ -74,6 +75,21 @@ while(1)
 			$uebertrag = 1;
 		}
 	} while $uebertrag;
+
+	# Berechne Gesamtwert der Kette deren Laenge isch daraus ergibt, ob da -1 auftritt oder das Ende erreicht wird):
+	my $sum = 0;
+	my @calculation = (); # oder als array?
+	for (my $column = 0; $column < $len_chain; $column++)
+	{
+		last if $chain->[ $column ] == -1;
+		$sum += $values->[ $chain->[ $column ] ];
+		my $factor = $values->[ $chain->[ $column ] ] > 0 ? "+" : "-";
+		push( @calculation, $factor );
+		push( @calculation, $names->[ $chain->[ $column ] ] );
+	}
+	shift @calculation;
+	print join(" ", @calculation) . " = " . $sum . "\n";
 	print join(" ", @$chain) . "\n";
+	print "\n";
 }
 
