@@ -18,6 +18,7 @@ GetOptions(
 	'max=s'      => \my $maxvalue,
 	'offset=s'   => \my $offset,
 	'precision=s'=> \my $precision,
+	'verbose'    => \my $is_verbose,
 );
 
 die("I need values") unless scalar @weights;
@@ -59,12 +60,14 @@ for (my $i = 1; $i <= $len; $i++)
 my $len_chain = scalar @$chain;
 
 my $num_values = scalar @$values;
-print "weights: " . Dumper( \@weights );
 
-
-print "Names : " . Dumper( $names );
-print "Values: " . Dumper( $values );
-print "chain : " . Dumper( $chain );
+if ($is_verbose)
+{
+	print "weights: " . Dumper( \@weights );
+	print "Names : " . Dumper( $names );
+	print "Values: " . Dumper( $values );
+	print "chain : " . Dumper( $chain );
+}
 
 #
 my %results = ();
@@ -82,7 +85,7 @@ while(1)
 			$glied++;
 			if ($glied >= $len_chain)
 			{
-				print "Fallen beyond the numbers!\n";
+				print "Fallen beyond the numbers!\n" if $is_verbose;
 				goto RESULTS
 			}
 			$uebertrag = 1;
