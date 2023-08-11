@@ -95,20 +95,25 @@ while(1)
 	# Berechne Gesamtwert der Kette deren Laenge isch daraus ergibt, ob da -1 auftritt oder das Ende erreicht wird):
 	my $sum = 0;
 	my @calculation = (); # oder als array?
+	my $sum_was_below_zero = 0;
 	for (my $column = 0; $column < $len_chain; $column++)
 	{
 		last if $chain->[ $column ] == -1;
 		$sum += $values->[ $chain->[ $column ] ];
+		$sum_was_below_zero = 1 if $sum < 0;
 		my $factor = $values->[ $chain->[ $column ] ] > 0 ? "+" : "-";
 		push( @calculation, $factor );
 		push( @calculation, $names->[ $chain->[ $column ] ] );
 	}
 	# print $sum . " = " . join(" ", @calculation) . "\n";
-	$sum = round( $precision * $sum ) / $precision;
-	if (($sum > 0) && (! defined $results{ $sum }))
+	if (! $sum_was_below_zero)
 	{
-		shift @calculation;
-		$results{ $sum } = join( " ", @calculation );
+		$sum = round( $precision * $sum ) / $precision;
+		if (($sum > 0) && (! defined $results{ $sum }))
+		{
+			shift @calculation;
+			$results{ $sum } = join( " ", @calculation );
+		}
 	}
 	# print join(" ", @$chain) . "\n";
 }
