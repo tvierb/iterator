@@ -17,6 +17,7 @@ GetOptions(
 	'length=s'   => \my $len,
 	'max=s'      => \my $maxvalue,
 	'offset=s'   => \my $offset,
+	'precision=s'=> \my $precision,
 );
 
 die("I need values") unless scalar @weights;
@@ -24,6 +25,8 @@ $offset //= 0;
 $len //= 4;
 $maxvalue //= 50;
 $name //= "irjenswas";
+$precision //= 2;
+$precision = 10**$precision;
 
 my $num_weights = scalar @weights;
 
@@ -92,7 +95,7 @@ while(1)
 		push( @calculation, $names->[ $chain->[ $column ] ] );
 	}
 	# print $sum . " = " . join(" ", @calculation) . "\n";
-	$sum = round( 100 * $sum ) / 100;
+	$sum = round( $precision * $sum ) / $precision;
 	if (($sum > 0) && (! defined $results{ $sum }))
 	{
 		shift @calculation;
