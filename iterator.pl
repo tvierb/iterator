@@ -82,7 +82,7 @@ while(1)
 			$glied++;
 			if ($glied >= $len_chain)
 			{
-				print "Uebertrag des Todes\n";
+				print "Fallen beyond the numbers!\n";
 				goto RESULTS
 			}
 			$uebertrag = 1;
