@@ -18,6 +18,7 @@ GetOptions(
 	'max=s'      => \my $maxvalue,
 	'offset=s'   => \my $offset,
 	'precision=s'=> \my $precision,
+	'search=s'   => \my $search_value, # search best method to get this weight
 	'verbose'    => \my $is_verbose,
 );
 
@@ -119,9 +120,30 @@ while(1)
 }
 
 RESULTS:
+
+my $best_diff = 10*10;
+my $best_value = 0;
+my $best_calculation = "none";
 print "Kleingewichte von $name abmessen:\n";
+
 foreach my $v (sort { $a <=> $b } keys %results)
 {
-	print "$v = " . $results{$v} . "\n";
+	unless (defined( $search_value ))
+	{
+		print "$v = " . $results{$v} . "\n";
+		next;
+	}
+
+	if ( abs($v - $search_value) < $best_diff )
+	{
+		$best_diff = abs($v - $search_value);
+		$best_value = $v;
+		$best_calculation = $results{$v};
+	}
 }
+
+if (defined $search_value)
+{
+	print "Bester Treffer fuer Suche nach $search_value mit max. $len Behaeltern:\n\n";
+	print "$best_value = $best_calculation\n"; }
 

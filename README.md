@@ -3,14 +3,36 @@
 Usage:
     ./iterator.pl -w IkeaTL:8.73 -w LochTL:9 -w MiniTL:6.1 -w IkeaEL:25 -w LochEL:23.25 --precision 2 --length 4 --name Salz
 
-Idea:
+The idea:
 
 The idea ist to measure a specific needed weight of salt, sugar oder yeast by only using spoons.
 OK some people use blasphemic witchcrafted devices that display a number but not me!
 
 In my case, I shovelled up to 100g with five different spoons to calculate each capacity.
 
-With this program here I now can calculate how to get to more weights. In this case with upto four spoons:
+With this program here I now can calculate how to get to more weights.
+
+In normal operation mode it prints the table of all possible weight combinations.
+Now there's "--search <weight>" to search and display only the solution for a specific weight.
+
+## Search for how to get 34.6g of salt
+
+    ./iterator.pl -w IkeaTL:8.73 -w LochTL:9 -w MiniTL:6.1 -w IkeaEL:25 -w LochEL:23.25 --precision 2 --length 3 --name Salt --search 34.6
+    Kleingewichte von Salt abmessen:
+    Bester Treffer fuer Suche nach 34.6 mit max. 3 Behaeltern:
+
+    34 = IkeaEL + LochTL
+
+There'a a better result with four spoons:
+
+    ./iterator.pl -w IkeaTL:8.73 -w LochTL:9 -w MiniTL:6.1 -w IkeaEL:25 -w LochEL:23.25 --precision 2 --length 4 --name Salt --search 34.6
+    Kleingewichte von Salt abmessen:
+    Bester Treffer fuer Suche nach 34.6 mit max. 4 Behaeltern:
+
+    34.61 = LochEL - MiniTL + IkeaTL + IkeaTL
+
+
+## table output with max 4 spoons for salt
 
 (Three spoons should be sufficient for most weights)
 
