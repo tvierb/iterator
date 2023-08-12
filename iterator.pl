@@ -119,6 +119,7 @@ while(1)
 }
 
 RESULTS:
+print "Kleingewichte von $name abmessen:\n";
 foreach my $v (sort { $a <=> $b } keys %results)
 {
 	print "$v = " . $results{$v} . "\n";
