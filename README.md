@@ -15,6 +15,7 @@ With this program here I now can calculate how to get to more weights. In this c
 (Three spoons should be sufficient for most weights)
 
 Kleingewichte von Salz abmessen:
+
      0.27 = LochTL - IkeaTL
      0.31 = MiniTL + IkeaTL + IkeaTL - LochEL
      0.54 = LochTL - IkeaTL + LochTL - IkeaTL
